@@ -31,6 +31,8 @@
 import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { JSDOM } from 'jsdom';
+import { chromium } from 'playwright';
 
 // ---------------------------------------------------------------------------
 // Bootstrap: load .env before anything else
@@ -77,6 +79,7 @@ if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
 
   USAGE
     node gemini-eval.mjs "<JD text>"
+    node gemini-eval.mjs "https://jobs.example.com/job-123"
     node gemini-eval.mjs --file ./jds/my-job.txt
     node gemini-eval.mjs --model gemini-2.5-flash "<JD text>"
 
@@ -89,10 +92,11 @@ if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
   SETUP
     1. Get a free API key at https://aistudio.google.com/apikey
     2. Add GEMINI_API_KEY=<your-key> to .env
-    3. Run: npm install   (installs @google/generative-ai + dotenv)
+    3. Run: npm install   (installs @google/generative-ai + dotenv + jsdom)
 
   EXAMPLES
     node gemini-eval.mjs "We are looking for a Senior AI Engineer..."
+    node gemini-eval.mjs "https://jobs.smartrecruiters.com/Bosch/744000127454252"
     node gemini-eval.mjs --file ./jds/openai-swe.txt
 `);
   process.exit(0);
@@ -125,6 +129,18 @@ if (!jdText) {
   process.exit(1);
 }
 
+// Check if jdText is a URL and fetch it
+if (jdText.startsWith('http://') || jdText.startsWith('https://')) {
+  console.log(`\n🌐 Fetching URL: ${jdText}`);
+  const fetchedText = await fetchURL(jdText);
+  if (!fetchedText) {
+    console.error('❌  Failed to fetch URL. Try pasting the JD text directly or use --file.');
+    process.exit(1);
+  }
+  jdText = fetchedText;
+  console.log(`✅ Successfully fetched ${jdText.length} characters from URL\n`);
+}
+
 // ---------------------------------------------------------------------------
 // Validate environment
 // ---------------------------------------------------------------------------
@@ -143,6 +159,60 @@ if (!apiKey) {
 // ---------------------------------------------------------------------------
 // File helpers
 // ---------------------------------------------------------------------------
+async function fetchURL(url) {
+  console.log(`  Attempting fetch with headers...`);
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+      }
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const html = await response.text();
+    
+    if (!html || html.trim().length === 0) {
+      throw new Error('Empty response body');
+    }
+    
+    // Extract text from HTML using JSDOM
+    const dom = new JSDOM(html);
+    const text = dom.window.document.body?.innerText?.trim();
+    
+    if (!text || text.length === 0) {
+      throw new Error('No text content extracted from HTML');
+    }
+    
+    return text;
+  } catch (err) {
+    console.warn(`  ⚠️   Fetch failed: ${err.message}. Trying Playwright...`);
+    
+    // Fallback: use Playwright for JavaScript-heavy sites
+    try {
+      const browser = await chromium.launch({ headless: true });
+      const page = await browser.newPage();
+      await page.goto(url, { waitUntil: 'networkidle', timeout: 15000 });
+      const content = await page.content();
+      await browser.close();
+      
+      if (!content || content.trim().length === 0) {
+        throw new Error('Empty content from Playwright');
+      }
+      
+      const dom = new JSDOM(content);
+      const text = dom.window.document.body?.innerText?.trim();
+      
+      if (!text || text.length === 0) {
+        throw new Error('No text content extracted by Playwright');
+      }
+      
+      return text;
+    } catch (playwrightErr) {
+      console.warn(`  ⚠️   Playwright also failed: ${playwrightErr.message}`);
+      return null;
+    }
+  }
+}
+
 function readFile(path, label) {
   if (!existsSync(path)) {
     console.warn(`⚠️   ${label} not found at: ${path}`);

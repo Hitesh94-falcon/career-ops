@@ -33,9 +33,15 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@azure-rest/ai-inference": "^1.0.0-beta.6",
+    "@azure/core-auth": "^1.9.0",
     "@google/generative-ai": "^0.24.1",
     "dotenv": "^17.0.0",
     "js-yaml": "^4.1.1",
-    "playwright": "^1.58.1"
+    "jsdom": "^26.1.0",
+    "openai": "^6.39.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.60.0"
   }
 }

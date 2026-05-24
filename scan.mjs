@@ -40,8 +40,8 @@ const parseYaml = yaml.load;
 
 const PORTALS_PATH = process.env.CAREER_OPS_PORTALS || 'portals.yml';
 const SCAN_HISTORY_PATH = 'data/scan-history.tsv';
-const PIPELINE_PATH = 'data/pipeline.md';
-const APPLICATIONS_PATH = 'data/applications.md';
+const PIPELINE_PATH = '/home/hitesh/Documents/job-automation/career-ops/data/pipeline.md';
+const APPLICATIONS_PATH = '/home/hitesh/Documents/job-automation/career-ops/data/applications.md';
 const PROVIDERS_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'providers');
 
 // Ensure required directories exist (fresh setup)
