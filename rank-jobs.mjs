@@ -14,7 +14,7 @@ config();
 import ModelClient, { isUnexpected } from "@azure-rest/ai-inference";
 import { AzureKeyCredential } from "@azure/core-auth";
 
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_TOKEN = process.env.TOKEN;
 const ENDPOINT = "https://models.github.ai/inference";
 const MODEL_NAME = "meta/Llama-4-Scout-17B-16E-Instruct";
 

@@ -1,0 +1,37 @@
+name: Job Automation Pipeline
+
+on:
+  workflow_dispatch:   # manual run button in GitHub UI
+  schedule:
+    - cron: "0 */2 * * *"
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Run job scan
+        run: npm run scan
+
+      - name: Run ranking pipeline
+        run: node rank-jobs-auto.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: job-rankings
+          path: data/job-rankings-*.json
