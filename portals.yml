@@ -1,0 +1,222 @@
+# Career-Ops Portal Configuration — Deep Learning & Computer Vision Focus
+# Optimized for: Deep Learning Engineer, Computer Vision, Image Processing, ML Engineer
+# Location: Germany + Remote EMEA (Berlin, Munich, Heidelberg, etc.)
+# Updated: May 24, 2026
+
+# -- Location filter --
+# Target: Germany only, with support for remote + German cities
+
+location_filter:
+  always_allow:
+    - "Germany"
+    - "Deutschland"
+    - "Berlin"
+    - "Munich"
+    - "München"
+    - "Hamburg"
+    - "Heidelberg"
+    - "Freiburg"
+    - "Cologne"
+    - "Köln"
+  allow:
+    - "Germany"
+    - "Deutschland"
+    - "DE"
+    - "Berlin"
+    - "Munich"
+    - "München"
+    - "Hamburg"
+    - "Heidelberg"
+    - "Freiburg"
+    - "Frankfurt"
+    - "Cologne"
+    - "Köln"
+    - "Stuttgart"
+    - "Bonn"
+    - "Zurich"
+    - "Zürich"
+  block:
+    - "USA"
+    - "US"
+    - "New York"
+    - "San Francisco"
+    - "NY"
+    - "CA"
+    - "Texas"
+    - "Ohio"
+    - "India"
+    - "Brazil"
+    - "China"
+    - "Russia"
+    - "Belgrade"
+    - "Serbia"
+    - "London"
+    - "UK"
+    - "United Kingdom"
+    - "Paris"
+    - "France"
+    - "Singapore"
+    - "Japan"
+    - "Dubai"
+
+# -- Title filter --
+# STRICTLY: Internship & Working Student positions only
+
+title_filter:
+  positive:
+    # -- Internship & Student Positions (Primary) --
+    - "Internship"
+    - "Intern"
+    - "Student"
+    - "Working Student"
+    - "Werkstudent"
+    - "HiWi"
+    - "Hiwi"
+    - "Student Assistant"
+    - "Graduate Trainee"
+    - "Junior"
+    - "Trainee"
+    # -- Tech skills for student roles --
+    - "Deep Learning"
+    - "Computer Vision"
+    - "Image Processing"
+    - "Machine Learning"
+    - "ML"
+    - "CV"
+    - "Neural Network"
+    - "PyTorch"
+    - "TensorFlow"
+    - "Python"
+    - "AI"
+    - "Engineer"  # Catch "Junior Engineer", "Student Engineer", etc.
+  negative:
+    # Exclude full-time senior positions
+    - "Senior"
+    - "Staff"
+    - "Lead"
+    - "Principal"
+    - "Manager"
+    - "Director"
+    - "VP"
+    - "CTO"
+    - "CEO"
+    # Exclude non-student roles
+    - "iOS"
+    - "Android"
+    - "React"
+    - "Frontend"
+    - "DevOps"
+    - "Blockchain"
+    - "Web3"
+    - "Crypto"
+  seniority_boost: []
+
+# -- Search queries --
+# STRICTLY: Internship & Working Student positions in Germany
+
+search_queries:
+  - name: Internship — Deep Learning Germany
+    query: '"Internship" OR "Intern" "Deep Learning" OR "Computer Vision" OR "Machine Learning" Germany Berlin'
+    enabled: true
+
+  - name: Werkstudent — ML/AI Germany
+    query: '"Werkstudent" OR "Working Student" "Machine Learning" OR "AI" OR "Python" Germany Berlin'
+    enabled: true
+
+  - name: Student Assistant — Computer Vision
+    query: '"Student Assistant" OR "HiWi" "Computer Vision" OR "Image" OR "ML" Germany'
+    enabled: true
+
+  - name: Graduate Trainee — ML Germany
+    query: '"Graduate Trainee" OR "Junior" "Machine Learning" OR "Deep Learning" Germany'
+    enabled: true
+
+  - name: Internship — PyTorch/TensorFlow Germany
+    query: '"Internship" "PyTorch" OR "TensorFlow" OR "Deep Learning" Germany Berlin München'
+    enabled: true
+
+  - name: Werkstudent — AI/Python Germany
+    query: '"Werkstudent" OR "HiWi" "Python" "AI" OR "Machine Learning" Germany'
+    enabled: true
+
+  - name: Student Position — Computer Vision Germany
+    query: 'student OR intern "computer vision" OR "image processing" OR "neural network" Germany'
+    enabled: false
+
+  - name: Internship — AI Research Germany
+    query: '"Internship" "AI" OR "Machine Learning" "Research" Germany Berlin'
+    enabled: true
+
+  - name: Working Student — ML Engineer Germany
+    query: '"Working Student" OR "Werkstudent" "ML" OR "Machine Learning" Germany'
+    enabled: true
+
+  - name: Student — Deep Learning Positions DACH
+    query: student OR intern "Deep Learning" OR "Computer Vision" Germany OR Zurich OR "Aleph Alpha" OR "DeepL"'
+    enabled: true
+
+# -- Tracked companies --
+# Companies BASED IN GERMANY with strong Deep Learning, Computer Vision, Image Processing hiring
+
+tracked_companies:
+
+  # -- German AI Labs & Computer Vision Leaders (Germany-based) --
+
+  # - name: Black Forest Labs
+  #   careers_url: https://job-boards.greenhouse.io/blackforestlabs
+  #   notes: "Freiburg DE. FLUX image generation models. Strong DL/CV team. Ex-Stable Diffusion founders."
+  #   enabled: true
+
+  # - name: Aleph Alpha
+  #   careers_url: https://jobs.ashbyhq.com/AlephAlpha
+  #   notes: "Heidelberg DE. LLM + multimodal AI. Vision + language models."
+  #   enabled: true
+
+  # - name: DeepL
+  #   careers_url: https://jobs.ashbyhq.com/DeepL
+  #   notes: "Cologne DE. Neural machine translation. Deep learning core."
+  #   enabled: true
+
+  # # -- German AI Research & Defense --
+
+  # - name: Helsing
+  #   careers_url: https://job-boards.greenhouse.io/helsing
+  #   notes: "Munich / Berlin DE. Defence AI. ML researchers and DL engineers."
+  #   enabled: true
+
+  # # -- DACH-based ML/AI Companies (Germany presence) --
+
+  # - name: Celonis
+  #   careers_url: https://job-boards.greenhouse.io/celonis
+  #   notes: "Munich DE. Process intelligence. ML platform with vision components."
+  #   enabled: true
+
+  # -- Automotive & Engineering (Germany-based with AI/ML potential) --
+
+  - name: BMW Germany
+    careers_url: https://www.bmwgroup.jobs/de/en/students/workingstudent.html
+    notes: "Munich / Germany. Automotive. Working student positions in robotics, AI, machine learning."
+    enabled: true
+
+  - name: Mercedes-Benz Germany
+    careers_url: https://jobs.mercedes-benz.com/enUS?enUS%3FTargetGroup.Code=2&CareerLevel.Code=%5B25%5D&JobCategory.Code=%5B46%2C42%5D
+    notes: "Stuttgart / Germany. Automotive. Internships and working student positions, AI/ML roles."
+    enabled: true
+
+  - name: Bosch Germany
+    careers_url: https://api.smartrecruiters.com/v1/companies/boschgroup/postings?limit=100&entryLevel=student&country=de
+    notes: "Stuttgart / Germany. Engineering/IoT. Student and working student positions via SmartRecruiters API."
+    enabled: true
+
+  - name: Porsche Germany - Working Student
+    careers_url: https://jobs.porsche.com/index.php?ac=search_result&search_criterion_channel%5B%5D=12&search_criterion_entry_level%5B%5D=4#skip-to-search-result-heading
+    notes: "Stuttgart / Germany. Automotive. Working student positions (Werkstudent)."
+    enabled: true
+
+  - name: Porsche Germany - Internship
+    careers_url: https://jobs.porsche.com/index.php?ac=search_result&search_criterion_channel%5B%5D=12&search_criterion_entry_level%5B%5D=5#skip-to-search-result-heading
+    notes: "Stuttgart / Germany. Automotive. Internship positions (Praktikum)."
+    enabled: true
+
+
+
