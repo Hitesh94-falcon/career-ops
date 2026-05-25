@@ -3,7 +3,7 @@ name: Job Automation Pipeline
 on:
   workflow_dispatch:   # manual run button in GitHub UI
   schedule:
-    - cron: "0 */2 * * *"
+    - cron: "0 */5 * * *"
 
 jobs:
   run-pipeline:
